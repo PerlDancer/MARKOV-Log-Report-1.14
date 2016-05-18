@@ -30,8 +30,10 @@ BEGIN {
 {
     package TestApp;
     use Dancer2;
-    use Log::Report ();
-    use Dancer2::Plugin::LogReport;
+    # Import options can be passed to Log::Report.
+    use Dancer2::Plugin::LogReport 'test_app', import => 'dispatcher';
+    # or you can just use the plugin to get syntax => 'LONG'
+    # use Dancer2::Plugin::LogReport;
 
     set session => 'Simple';
     set logger  => 'LogReport';
