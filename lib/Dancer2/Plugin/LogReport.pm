@@ -22,11 +22,18 @@ use Scalar::Util qw/blessed/;
 my $_dsl;        # XXX How to avoid the global?   Dancer2::Core::DSL
 my $_settings;
 
-
 # "use" import
 sub import
 {   my $class = shift;
-    Log::Report->import('+2', @_, syntax => 'LONG');
+
+    # Import Log::Report into the caller. Import options get passed through
+    my $level = $Dancer2::VERSION > 0.166001 ? '+1' : '+2';
+    Log::Report->import($level, @_, syntax => 'LONG');
+
+    # Ensure the overridden import method is called ( from Exporter::Tiny )
+    # note this does not (currently) pass options through.
+    my $caller = caller;
+    $class->SUPER::import( { into => $caller } );
 }
 
 my %session_messages;
