@@ -10,6 +10,8 @@ $VERSION = '1.14';
 use warnings;
 use strict;
 
+BEGIN { use Log::Report (); }  # load early
+
 use Dancer2::Plugin;
 use Dancer2::Plugin::LogReport::Message;
 use Log::Report  'log-report', syntax => 'REPORT',
