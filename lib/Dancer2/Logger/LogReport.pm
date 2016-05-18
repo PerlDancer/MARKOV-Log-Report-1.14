@@ -65,12 +65,12 @@ around 'error' => sub {
     $self->log(error => @_);
 };
 
-
-sub log($$$)
+# No prototype on the log method to silence Prototype Mismatch warnings
+sub log
 {   my ($self, $level, $msg) = @_;
 
     # the levels are nearly the same.
-    my $reason = $level_dancer2lr{$level} // uc $level;
+    my $reason = $level_dancer2lr{$level} || uc $level;
 
     report $reason => $msg;
     undef;
